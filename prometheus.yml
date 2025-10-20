@@ -1,0 +1,9 @@
+global: # definiert Standardwerte für das ganze Prometheus-Setup
+  scrape_interval: 15s # Prometheus wird alle 15 Sekunden die konfigurierten Targets abfragen (scrapen).
+
+# Das definiert einen "Scrape-Job", also eine Quelle, von der Prometheus Metriken holt.
+scrape_configs:
+  - job_name: 'my-prometheus-job' # Ein Name für diesen Job. Wird in Prometheus für Queries angezeigt.
+    metrics_path: '/actuator/prometheus' # Der HTTP-Pfad, auf dem die Metriken verfügbar sind. Standard ist /metrics, Spring Boot Actuator verwendet "/actuator/prometheus".
+    static_configs: # Hier definiert man die Ziele (Targets) manuell.
+      - targets: [ 'app:8080' ] # Liste der Hosts/IPs + Ports, von denen Prometheus Metriken abruft. In Docker-Compose benutzt man Service-Namen (app) anstelle von localhost.
